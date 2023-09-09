@@ -5,6 +5,6 @@ namespace ZenturyLoginsApp.DataServices.Repositories.Interfaces
 {
     public interface ILoginRepository : IGenericRepository<Login>
     {
-        Task<IEnumerable<Login>> SearchLogins(string query, Paging paging);
+        Task<IEnumerable<Login>> SearchLogins(string query, Paging paging, Sorting sorting);
     }
 }

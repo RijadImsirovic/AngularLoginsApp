@@ -4,6 +4,6 @@ namespace ZenturyLoginsApp.BLL.Interfaces
 {
     public interface ILoginsService
     {
-        Task<SearchResponse<LoginDto>> SearchLogins(string query, int page, int pageSize);
+        Task<SearchResponse<LoginDto>> SearchLogins(string query, int page, int pageSize, string sortColumn, string sortOrder);
     }
 }

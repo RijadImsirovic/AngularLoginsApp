@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using ZenturyLoginsApp.Common;
 using ZenturyLoginsApp.Common.Extensions;
 using ZenturyLoginsApp.DataServices.Data;
@@ -14,7 +15,7 @@ namespace ZenturyLoginsApp.DataServices.Repositories
             
         }
 
-        public async Task<IEnumerable<Login>> SearchLogins(string query, Paging paging)
+        public async Task<IEnumerable<Login>> SearchLogins(string query, Paging paging, Sorting sorting)
         {
             query = !string.IsNullOrWhiteSpace(query) ? query.ToLower() : string.Empty;
 
@@ -25,10 +26,27 @@ namespace ZenturyLoginsApp.DataServices.Repositories
                 .GroupBy(x => x.Id)
                 .Select(x => x.FirstOrDefault())
                 .AsQueryable()
-                .DoPaging(paging)
-                .OrderByDescending(x => x.LoginAttemptAt);
+                .DoPaging(paging);
+
+            if (sorting.SortOrder?.ToLower() == "desc")
+                logins = logins.OrderByDescending(GetSortProperty(sorting));
+            else
+                logins = logins.OrderBy(GetSortProperty(sorting));
 
             return logins;
+        }
+
+        private static Expression<Func<Login?, object>> GetSortProperty(Sorting sorting)
+        {
+            return sorting.SortColumn?.ToLower() switch
+            {
+                "id" => login => login.Id,
+                "userid" => login => login.UserId,
+                "username" => login => login.User.UserName,
+                "email" => login => login.User.Email,
+                "issuccessful" => login => login.IsSuccessful,
+                _ => login => login.LoginAttemptAt
+            };
         }
     }
 }

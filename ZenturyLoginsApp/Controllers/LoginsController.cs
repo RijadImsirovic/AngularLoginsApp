@@ -21,11 +21,11 @@ namespace ZenturyLoginsApp.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<SearchResponse<LoginDto>> SearchLogins([FromQuery] string? query = "", int page = 1, int pageSize = 10)
+        public async Task<SearchResponse<LoginDto>> SearchLogins([FromQuery] string? query = "", int page = 1, int pageSize = 10, string? sortColumn = "LoginAttemptAt", string? sortOrder = "desc")
         {
             try
             {
-                var results = await _loginsService.SearchLogins(query, page, pageSize);
+                var results = await _loginsService.SearchLogins(query, page, pageSize, sortColumn, sortOrder);
                 return results;
             }
             catch (Exception ex)

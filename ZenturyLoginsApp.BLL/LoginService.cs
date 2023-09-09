@@ -18,11 +18,17 @@ namespace ZenturyLoginsApp.BLL
             _mapper = mapper;
         }
 
-        public async Task<SearchResponse<LoginDto>> SearchLogins(string query, int page, int pageSize)
+        public async Task<SearchResponse<LoginDto>> SearchLogins(string query, int page, int pageSize, string sortColumn, string sortOrder)
         {
             Paging paging = ValidatePagingAndFilterCriteria(query, page, pageSize);
 
-            var logins = await _loginRepository.SearchLogins(query, paging);
+            Sorting sorting = new Sorting
+            {
+                SortColumn = sortColumn,
+                SortOrder = sortOrder
+            };
+            
+            var logins = await _loginRepository.SearchLogins(query, paging, sorting);
 
             if (logins == null || paging.TotalRecords == 0)
                 throw new FileNotFoundException("Logins could not be found.");
