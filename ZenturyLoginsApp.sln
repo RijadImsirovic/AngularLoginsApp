@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenturyLoginsApp.Models", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenturyLoginsApp.DataServices", "ZenturyLoginsApp.DataServices\ZenturyLoginsApp.DataServices.csproj", "{41C7CCA4-2DDC-41B5-B566-DFCADCE2137B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenturyLoginsApp.Common", "ZenturyLoginsApp.Common\ZenturyLoginsApp.Common.csproj", "{F501D59A-5481-4842-A82E-5142E1F0BAA6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZenturyLoginsApp.BLL", "ZenturyLoginsApp.BLL\ZenturyLoginsApp.BLL.csproj", "{34D29063-8E24-4C3D-B947-C28B89192000}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{41C7CCA4-2DDC-41B5-B566-DFCADCE2137B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41C7CCA4-2DDC-41B5-B566-DFCADCE2137B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41C7CCA4-2DDC-41B5-B566-DFCADCE2137B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F501D59A-5481-4842-A82E-5142E1F0BAA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F501D59A-5481-4842-A82E-5142E1F0BAA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F501D59A-5481-4842-A82E-5142E1F0BAA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F501D59A-5481-4842-A82E-5142E1F0BAA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34D29063-8E24-4C3D-B947-C28B89192000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34D29063-8E24-4C3D-B947-C28B89192000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34D29063-8E24-4C3D-B947-C28B89192000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34D29063-8E24-4C3D-B947-C28B89192000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

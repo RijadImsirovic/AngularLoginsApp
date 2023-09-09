@@ -7,7 +7,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using ZenturyLoginsApp.Configurations;
+using ZenturyLoginsApp.DataServices.Repositories.Interfaces;
 using ZenturyLoginsApp.Models.DTOs;
+using ZenturyLoginsApp.Models.Entities;
 
 namespace ZenturyLoginsApp.Controllers
 {
@@ -16,14 +18,16 @@ namespace ZenturyLoginsApp.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ILogger<AuthController> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly JwtConfig _jwtConfig;
+        private readonly ILoginRepository _loginRepository;
 
-        public AuthController(ILogger<AuthController> logger, UserManager<IdentityUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor)
+        public AuthController(ILogger<AuthController> logger, UserManager<ApplicationUser> userManager, IOptionsMonitor<JwtConfig> optionsMonitor, ILoginRepository loginRepository)
         {
             _logger = logger;
             _userManager = userManager;
             _jwtConfig = optionsMonitor.CurrentValue;
+            _loginRepository = loginRepository;
         }
 
         [AllowAnonymous]
@@ -38,18 +42,15 @@ namespace ZenturyLoginsApp.Controllers
                 if (emailExists != null)
                     return BadRequest("Email already exists!");
 
-                var newUser = new IdentityUser() { Email = requestDto.Email, UserName = requestDto.Username };
+                var newUser = new ApplicationUser() { Email = requestDto.Email, UserName = requestDto.Username };
 
                 var isCreated = await _userManager.CreateAsync(newUser, requestDto.Password);
 
                 if (isCreated.Succeeded)
                 {
-                    var token = GenerateJwtToken(newUser);
-
                     return Ok(new RegistrationRequestResponse
                     {
-                        Result = true,
-                        Token = token
+                        Result = true
                     });
                 }
 
@@ -73,6 +74,8 @@ namespace ZenturyLoginsApp.Controllers
 
                 var isPasswordValid = await _userManager.CheckPasswordAsync(existingUser, requestDto.Password);
 
+                await LogLoginAttempt(existingUser, isPasswordValid);
+
                 if (isPasswordValid)
                 {
                     var token = GenerateJwtToken(existingUser);
@@ -91,7 +94,19 @@ namespace ZenturyLoginsApp.Controllers
             return BadRequest("Invalid request payload");
         }
 
-        private string GenerateJwtToken(IdentityUser user)
+        private async Task LogLoginAttempt(ApplicationUser existingUser, bool isPasswordValid)
+        {
+            _loginRepository.Insert(new Login
+            {
+                UserId = existingUser.Id,
+                IsSuccessful = isPasswordValid,
+                LoginAttemptAt = DateTime.UtcNow
+            });
+
+            await _loginRepository.SaveAsync();
+        }
+
+        private string GenerateJwtToken(ApplicationUser user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
 

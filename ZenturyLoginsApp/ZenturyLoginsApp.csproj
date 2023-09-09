@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ZenturyLoginsApp.BLL\ZenturyLoginsApp.BLL.csproj" />
     <ProjectReference Include="..\ZenturyLoginsApp.DataServices\ZenturyLoginsApp.DataServices.csproj" />
   </ItemGroup>
 
