@@ -32,8 +32,8 @@ namespace ZenturyLoginsApp.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        [Route("register")]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationRequestDto requestDto)
+        [Route("addOrregister")]
+        public async Task<IActionResult> AddOrRegister([FromBody] UserRegistrationRequestDto requestDto)
         {
             if (ModelState.IsValid)
             {
