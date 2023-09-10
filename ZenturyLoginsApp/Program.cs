@@ -18,6 +18,7 @@ builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfi
 
 builder.Services.AddTransient<ILoginRepository, LoginRepository>();
 builder.Services.AddTransient<ILoginsService, LoginService>();
+builder.Services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
