@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ZenturyLoginsApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class WeatherForecastController : ControllerBase
     {
