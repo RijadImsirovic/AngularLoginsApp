@@ -1,4 +1,4 @@
-# ZenturyLoginsApp
+# AngularLoginsApp
 
 Create a simple web application that has the following requirements:
 - User login page with email and password fields,
